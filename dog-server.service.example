@@ -1,0 +1,31 @@
+[Unit]
+Description=狗资源管理平台 (Dog Resource Management)
+After=network.target
+
+[Service]
+Type=simple
+User=<你的用户名>
+WorkingDirectory=<项目绝对路径>
+ExecStart=/usr/bin/python3 <项目绝对路径>/server.py
+Restart=always
+RestartSec=5
+StandardOutput=append:<项目绝对路径>/server.log
+StandardError=append:<项目绝对路径>/server.log
+
+# 环境变量端口
+Environment=PORT=8080
+
+# ===== 飞书通知配置（请替换为你自己的自建应用凭据）=====
+# 在 https://open.feishu.cn 创建自建应用后获取
+Environment=FEISHU_APP_ID=<你的飞书AppID>
+Environment=FEISHU_APP_SECRET=<你的飞书AppSecret>
+# 是否启用飞书推送： 1 启用 / 0 关闭
+Environment=FEISHU_ENABLED=0
+
+# 平台管理员（姓名，逗号分隔，用于编辑/删除权限校验）
+Environment=FEISHU_ADMINS=杨怡海,周文成
+# 默认通知群 chat_id（群消息推送目标，必填）
+Environment=FEISHU_GROUP_CHAT_ID=<你的群chat_id>
+
+[Install]
+WantedBy=multi-user.target
